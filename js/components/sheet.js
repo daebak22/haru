@@ -5,10 +5,22 @@ import { icons } from './icons.js';
 
 const stack = [];
 let ignorePop = 0;
+let afterBack = []; // 시트가 닫히며 생긴 "뒤로 가기"가 끝난 뒤 실행할 일
+
+// 시트를 닫은 직후 화면을 이동해야 할 때 사용 (뒤로 가기와 겹쳐 이동이 취소되는 것 방지)
+export function whenSheetsClosed(fn) {
+  if (ignorePop > 0) afterBack.push(fn);
+  else fn();
+}
 
 window.addEventListener('popstate', () => {
   if (ignorePop > 0) {
     ignorePop--;
+    if (ignorePop === 0 && afterBack.length) {
+      const fns = afterBack;
+      afterBack = [];
+      fns.forEach((f) => f());
+    }
     return;
   }
   const top = stack[stack.length - 1];

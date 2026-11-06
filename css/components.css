@@ -721,6 +721,69 @@ body.sheet-open { overflow: hidden; }
 /* 구글 일정 = 테두리만 */
 .ev.g { background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 1.2px var(--c); }
 
+/* ───────── 프로젝트 ───────── */
+/* 달력 칸: 좌우 여백을 없애서 프로젝트 막대가 이어지게, 다른 막대는 안쪽으로 */
+.cal-cell { padding-left: 0; padding-right: 0; }
+.cal-cell .ev { margin: 0 2px; }
+.ev.p {
+  margin: 0; height: 15px; line-height: 15px; padding: 0 5px;
+  border-radius: 0; box-shadow: none;
+  background: color-mix(in srgb, var(--c) 38%, var(--surface));
+  color: color-mix(in srgb, var(--c) 40%, var(--text));
+  font-size: 10.5px; font-weight: 750;
+}
+.ev.p.s { margin-left: 2px; border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+.ev.p.e { margin-right: 2px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+@media (min-width: 900px) and (orientation: landscape) {
+  .cal-cell { padding-left: 0; padding-right: 0; }
+  .cal-cell .top { padding-left: 6px; }
+  .cal-cell .ev { margin: 0 4px; }
+  .ev.p { margin: 0; height: 17px; line-height: 17px; }
+  .ev.p.s { margin-left: 4px; }
+  .ev.p.e { margin-right: 4px; }
+}
+
+.pfilter { margin-bottom: 12px; }
+.plist { display: flex; flex-direction: column; gap: 10px; }
+.pcard, .pdetail {
+  display: block;
+  padding: 14px 16px 12px 18px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: inset 4px 0 0 var(--c), var(--shadow-card);
+  color: var(--text);
+  text-decoration: none;
+}
+.pcard.selected { box-shadow: inset 4px 0 0 var(--c), 0 0 0 2px var(--accent); }
+.pcard.is-done { opacity: 0.6; }
+.pcard-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pname { font-size: 16px; font-weight: 750; word-break: keep-all; }
+.pname.big { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+.pdday { font-size: 13px; font-weight: 800; color: var(--point); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+.pmeta b { margin-left: auto; color: var(--text); font-variant-numeric: tabular-nums; }
+.pstatus {
+  display: inline-flex; align-items: center; height: 22px; padding: 0 9px;
+  border: 0; border-radius: 999px;
+  background: var(--accent-soft); color: var(--text);
+  font-size: 11.5px; font-weight: 750; cursor: pointer;
+}
+.pstatus.s-active { background: color-mix(in srgb, var(--c) 30%, var(--surface)); }
+.pstatus.s-done { background: var(--surface-2); color: var(--muted); }
+.pstatus.s-hold { background: var(--surface-2); color: var(--muted); }
+.pbar { height: 6px; margin-top: 10px; overflow: hidden; border-radius: 6px; background: var(--surface-2); }
+.pbar.big { height: 10px; margin-top: 14px; }
+.pbar i { display: block; height: 100%; border-radius: 6px; background: var(--c); transition: width 0.3s; }
+.pdetail { margin-top: 4px; padding-top: 10px; }
+.add-item { display: flex; align-items: center; gap: 8px; min-height: 54px; padding: 4px 10px 4px 14px; border-top: 1px solid var(--line); }
+.list > .add-item:first-child { border-top: 0; }
+.add-item .plus { flex: 0 0 auto; width: 24px; height: 24px; color: var(--faint); }
+.add-item .plus svg { width: 22px; height: 22px; }
+.add-input { flex: 1; min-width: 0; height: 40px; border: 0; background: none; outline: none; font-size: 15px; }
+.memo-box { padding: 14px 16px; font-size: 14.5px; line-height: 1.65; }
+.row-meta .proj { color: color-mix(in srgb, var(--c) 55%, var(--text)); font-weight: 650; }
+.section-title .btn svg { width: 15px; height: 15px; }
+
 /* ───────── 데일리 플래너 ───────── */
 .center { text-align: center; margin: -2px 0 8px; }
 .hint.tight { margin: 6px 2px 0; }

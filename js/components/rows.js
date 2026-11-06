@@ -1,7 +1,7 @@
 // 할 일 한 줄 / 루틴 한 줄 그리기
 import { state, catColor } from '../state.js';
 import { esc } from '../util/dom.js';
-import { fmtShort } from '../util/date.js';
+import { fmtShort, today } from '../util/date.js';
 import { describeRepeat } from '../model/routine.js';
 import { icons } from './icons.js';
 
@@ -24,9 +24,11 @@ export function catMeta(categoryId) {
 
 export function taskRowHTML(task, { showDate = false } = {}) {
   const meta = [];
-  if (showDate && task.date) meta.push(`<span class="late">${fmtShort(task.date)}</span>`);
+  if (showDate && task.date) meta.push(`<span class="${task.date < today() && !task.done ? 'late' : 'date'}">${fmtShort(task.date)}</span>`);
   if (task.time) meta.push(`<span class="time">${esc(task.time)}</span>`);
   meta.push(catMeta(task.categoryId));
+  const proj = task.projectId && state.projectMap?.[task.projectId];
+  if (proj) meta.push(`<span class="proj" style="--c:${proj.color || 'var(--nocat)'}">▸ ${esc(proj.name)}</span>`);
   if (task.postponed) meta.push(`<span title="미룬 횟수">미룸 ${task.postponed}</span>`);
   if (task.memo) meta.push(`<span class="memo">${esc(task.memo.split('\n')[0].slice(0, 40))}</span>`);
   const metaHTML = meta.filter(Boolean).join('');

@@ -47,7 +47,9 @@ export function render() {
   root.className = 'main';
   window.scrollTo(0, 0);
   renderNav(name);
-  cleanup = routes[name].mount(root) || null;
+  // 주소 뒷부분(#projects/아이디)을 화면에 넘김
+  const params = location.hash.slice(1).split('/').slice(1).map(decodeURIComponent);
+  cleanup = routes[name].mount(root, { params }) || null;
 }
 
 export function start() {

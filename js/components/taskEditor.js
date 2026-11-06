@@ -9,8 +9,18 @@ import { catChipsHTML, setupCatPicker, lastCategory, rememberCategory } from './
 import { deleteTask } from './taskActions.js';
 
 // date: undefined → 오늘, null → 보관함, 'YYYY-MM-DD' → 그 날짜
-export function openTaskEditor({ task = null, date } = {}) {
+export function openTaskEditor({ task = null, date, projectId = null } = {}) {
   const isNew = !task;
+  const curProject = task ? task.projectId || null : projectId;
+  const projects = state.projects.filter((p) => p.status !== 'done' || p.id === curProject);
+  const projectField = projects.length
+    ? `<div class="field">
+        <span class="field-label">프로젝트 <small>(선택)</small></span>
+        <select class="input" name="projectId" aria-label="프로젝트"><option value="">연결 안 함</option>${projects
+          .map((p) => `<option value="${esc(p.id)}" ${p.id === curProject ? 'selected' : ''}>${esc(p.name)}</option>`)
+          .join('')}</select>
+      </div>`
+    : '';
   const t = today();
   const tm = addDays(t, 1);
   let curDate = task ? task.date : date === undefined ? t : date;
@@ -40,6 +50,7 @@ export function openTaskEditor({ task = null, date } = {}) {
         <span class="field-label">카테고리</span>
         <div class="chips" data-cats>${catChipsHTML(curCat)}</div>
       </div>
+      ${projectField}
       <div class="field">
         <span class="field-label">메모</span>
         <textarea class="input" name="memo" rows="3" maxlength="2000" placeholder="자세한 내용 (선택)">${esc(task?.memo)}</textarea>
@@ -102,9 +113,10 @@ export function openTaskEditor({ task = null, date } = {}) {
           time: curDate ? f.time.value || null : null,
           memo: f.memo.value.trim(),
           categoryId: curCat,
+          projectId: f.projectId ? f.projectId.value || null : curProject,
         };
         if (isNew) {
-          store.add('tasks', { ...data, done: false, doneAt: null, projectId: null, postponed: 0, spentSec: 0, order: Date.now() });
+          store.add('tasks', { ...data, done: false, doneAt: null, postponed: 0, spentSec: 0, order: Date.now() });
           rememberCategory(curCat);
           toast(data.date ? '할 일을 추가했어요' : '보관함에 넣었어요');
         } else {

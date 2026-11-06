@@ -13,15 +13,15 @@ import * as quotesView from './views/quotes.js';
 import * as gcalSettingsView from './views/gcalSettings.js';
 import * as termsView from './views/terms.js';
 import * as plannerView from './views/planner.js';
+import * as projectsView from './views/projects.js';
 import { startTicker } from './timer.js';
 import { prepare as prepareGcal } from './gcal.js';
 import { setupServiceWorker } from './pwa.js';
-import { placeholder } from './views/placeholder.js';
 
 router.register('today', todayView);
 router.register('calendar', calendarView);
 router.register('planner', plannerView);
-router.register('projects', placeholder('프로젝트', 5, '프로젝트 기간, 세부 체크리스트, 진행률 막대가 들어갈 자리예요.', 'projects'));
+router.register('projects', projectsView);
 router.register('more', moreView);
 router.register('backlog', backlogView);
 router.register('routines', routinesView);

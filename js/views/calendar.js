@@ -8,6 +8,7 @@ import { isWide } from '../util/layout.js';
 import { esc, frame, setHTML, readableOn, safeColor } from '../util/dom.js';
 import { onGcal, eventsOn } from '../gcal.js';
 import { autoRefresh } from '../components/gcalUI.js';
+import { projectsOn } from '../model/project.js';
 import { occursOn } from '../model/routine.js';
 import { icons } from '../components/icons.js';
 import { sortTasks } from '../components/rows.js';
@@ -82,12 +83,23 @@ export function mount(root, opts = {}) {
     return `<span class="ev g" style="--c:${c}">${esc(ev.title)}</span>`;
   }
 
-  function cellHTML(d, list, dayDoc, maxEv) {
+  // 프로젝트 기간 막대: 시작일·주의 첫 칸에만 이름, 칸 사이는 이어지게
+  function pbarHTML(p, d, weekStart) {
+    const s = d === p.startDate;
+    const e = d === p.endDate;
+    return `<span class="ev p${s ? ' s' : ''}${e ? ' e' : ''}" style="--c:${safeColor(p.color)}">${s || weekStart ? esc(p.name) : '&nbsp;'}</span>`;
+  }
+
+  function cellHTML(d, list, dayDoc, maxEv, weekStart) {
     const date = parse(d);
     const cls = ['cal-cell', date.getMonth() !== viewM && 'out', d === t && 'is-today', d === selected && 'selected']
       .filter(Boolean)
       .join(' ');
-    const items = [...eventsOn(d).map((ev) => ({ g: ev })), ...sortTasks(list)];
+    const items = [
+      ...projectsOn(state.projects, d).slice(0, 2).map((p) => ({ p })),
+      ...eventsOn(d).map((ev) => ({ g: ev })),
+      ...sortTasks(list),
+    ];
     const shown = items.length > maxEv ? items.slice(0, Math.max(0, maxEv - 1)) : items;
     const more = items.length - shown.length;
     let ok = '';
@@ -101,7 +113,7 @@ export function mount(root, opts = {}) {
     }
     return `<button type="button" class="${cls}" data-act="cal-pick" data-date="${d}" aria-label="${date.getMonth() + 1}월 ${date.getDate()}일, 할 일 ${list.length}개">
       <span class="top"><span class="num">${date.getDate()}</span>${ok}</span>
-      <span class="evs">${shown.map((x) => (x.g ? gevHTML(x.g) : evHTML(x))).join('')}${more ? `<span class="ev-more">+${more}</span>` : ''}</span>
+      <span class="evs">${shown.map((x) => (x.p ? pbarHTML(x.p, d, weekStart) : x.g ? gevHTML(x.g) : evHTML(x))).join('')}${more ? `<span class="ev-more">+${more}</span>` : ''}</span>
     </button>`;
   }
 
@@ -137,7 +149,7 @@ export function mount(root, opts = {}) {
           <div class="cal-week">${weekdayOrder(state.settings.weekStart)
             .map((i) => `<span class="${i === 0 ? 'sun' : i === 6 ? 'sat' : ''}">${weekdayName(i)}</span>`)
             .join('')}</div>
-          <div class="cal-grid" style="--rows:${rows}">${g.days.map((d) => cellHTML(d, byDate[d] || [], days[d], maxEv)).join('')}</div>
+          <div class="cal-grid" style="--rows:${rows}">${g.days.map((d, k) => cellHTML(d, byDate[d] || [], days[d], maxEv, k % 7 === 0)).join('')}</div>
         </div>
       </div>`;
     const fab = `<button type="button" class="fab" data-act="add" aria-label="할 일 추가">${icons.plus}</button>`;

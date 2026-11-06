@@ -8,6 +8,8 @@ export const state = {
   categories: [],
   catMap: {},
   routines: [],
+  projects: [],
+  projectMap: {},
 };
 
 const listeners = new Set();
@@ -66,6 +68,12 @@ export function startState() {
   });
   store.watch('routines', null, (docs) => {
     state.routines = docs;
+    emit();
+  });
+  // 프로젝트도 개수가 적어서 항상 구독 (달력 막대, 할 일 연결에 사용)
+  store.watch('projects', null, (docs) => {
+    state.projects = docs.sort((a, b) => (a.order || 0) - (b.order || 0));
+    state.projectMap = Object.fromEntries(docs.map((p) => [p.id, p]));
     emit();
   });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => applyTheme(state.settings.theme));
