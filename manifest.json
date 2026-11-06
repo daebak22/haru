@@ -1,0 +1,17 @@
+{
+  "name": "하루 - 할 일 · 루틴 · 플래너",
+  "short_name": "하루",
+  "description": "할 일, 루틴, 공부 시간, 프로젝트를 관리하고 구글 캘린더 일정을 함께 보는 개인 플래너",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F4F5F7",
+  "theme_color": "#F4F5F7",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

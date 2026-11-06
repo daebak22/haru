@@ -1,0 +1,36 @@
+// 직접 그린 단순한 선 아이콘 (외부 아이콘 서비스 사용 안 함)
+const s = (paths, sw = 1.8) =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+
+export const icons = {
+  today: s('<rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8.5 12 2.5 2.5 4.5-5"/>'),
+  home: s('<rect x="3.5" y="5" width="9" height="14" rx="2.5"/><path d="M15.5 8h5M15.5 12h5M15.5 16h3"/>'),
+  calendar: s('<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
+  planner: s('<rect x="4" y="3.5" width="16" height="17" rx="3"/><path d="M4 9h16M4 14.5h16M10 3.5v17M15 3.5v17"/>'),
+  projects: s('<path d="M5.5 20.5v-16"/><path d="M5.5 4.5h11l-2.2 4 2.2 4h-11"/>'),
+  more: s('<circle cx="6" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="18" cy="12" r="1.2"/>', 2.2),
+  dots: s('<circle cx="6" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="18" cy="12" r="1"/>', 2.4),
+  plus: s('<path d="M12 5v14M5 12h14"/>', 2.2),
+  left: s('<path d="m14.5 6-6 6 6 6"/>', 2),
+  right: s('<path d="m9.5 6 6 6-6 6"/>', 2),
+  up: s('<path d="m6 14.5 6-6 6 6"/>', 2),
+  down: s('<path d="m6 9.5 6 6 6-6"/>', 2),
+  x: s('<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>', 2),
+  check: s('<path d="m6 12.5 4 4 8-9"/>', 3),
+  repeat: s('<path d="M16.5 3.5 19.5 6.5l-3 3"/><path d="M4.5 11.5v-2a3 3 0 0 1 3-3h12"/><path d="M7.5 20.5l-3-3 3-3"/><path d="M19.5 12.5v2a3 3 0 0 1-3 3h-12"/>'),
+  inbox: s('<path d="M4 13.5h4.5l1.5 2.5h4l1.5-2.5H20"/><path d="M6 5h12l2 8.5V19H4v-5.5z"/>'),
+  tag: s('<path d="M3.5 12.5v-8h8l9 9-8 8z"/><circle cx="8" cy="9" r="1.3"/>'),
+  download: s('<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>'),
+  upload: s('<path d="M12 16V5M7 9.5l5-5 5 5M5 20h14"/>'),
+  arrow: s('<path d="M5 12h13M13 7l5 5-5 5"/>'),
+  trash: s('<path d="M4.5 7h15M10 11v6M14 11v6M6.5 7l1 13h9l1-13M9.5 7V4h5v3"/>'),
+  edit: s('<path d="M4 20h4L19 9l-4-4L4 16z"/>'),
+  skip: s('<path d="M6 6l8 6-8 6zM18 6v12"/>'),
+  refresh: s('<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4.5v4h-4"/>', 2),
+  external: s('<path d="M14 4.5h5.5V10M19.5 4.5 11 13M10 5.5H6A1.5 1.5 0 0 0 4.5 7v11A1.5 1.5 0 0 0 6 19.5h11a1.5 1.5 0 0 0 1.5-1.5v-4"/>'),
+  pin: s('<path d="M12 21s6.5-5.6 6.5-11a6.5 6.5 0 0 0-13 0c0 5.4 6.5 11 6.5 11z"/><circle cx="12" cy="10" r="2.3"/>'),
+  book: s('<path d="M5 4.5h9.5a3 3 0 0 1 3 3v12H8a3 3 0 0 1-3-3z"/><path d="M5 16.5a3 3 0 0 1 3-3h9.5"/>'),
+  heart: s('<path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/>'),
+  quote: s('<path d="M9.5 7.5C6.5 8.5 5 10.8 5 14v2.5h4.5V12H7.2c.2-1.6 1.1-2.7 2.8-3.3zM18.5 7.5c-3 1-4.5 3.3-4.5 6.5v2.5h4.5V12h-2.3c.2-1.6 1.1-2.7 2.8-3.3z"/>'),
+  sun: s('<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>'),
+};
