@@ -1,10 +1,23 @@
 // 앱 전체 설정값. 배포할 때마다 VERSION을 올린다 (sw.js의 VERSION과 같게).
 export const APP_NAME = '하루';
-export const VERSION = '0.5.0';
+export const VERSION = '0.6.0';
 
 // 구글 캘린더 읽기용 OAuth 클라이언트 ID (Google Cloud 콘솔에서 만든 값. 공개돼도 괜찮은 값)
 // 예: '1234567890-abcdefg.apps.googleusercontent.com'
 export const GOOGLE_CLIENT_ID = '492568552375-65tbffroaho7n1difjffemcelfscjisg.apps.googleusercontent.com';
+
+// Firebase (로그인 + 기기 간 동기화). 웹 앱 설정값은 공개돼도 괜찮다 — 실제 보호는 Firestore 보안 규칙이 한다.
+// apiKey가 비어 있으면 로그인 없이 이 기기에만 저장하는 방식으로 동작한다.
+export const FIREBASE_SDK = '12.19.0'; // 버전 고정
+export const FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyApaluQodgEkUdrE60GVjNhd0pu7CQn5w4',
+  authDomain: 'haru-513908.firebaseapp.com',
+  projectId: 'haru-513908',
+  storageBucket: 'haru-513908.firebasestorage.app',
+  messagingSenderId: '492568552375',
+  appId: '1:492568552375:web:77326138cb99126c49fe32',
+  // measurementId(애널리틱스)는 일부러 넣지 않음 — 추적 기능 사용 안 함
+};
 export const SCHEMA_VERSION = 1;
 
 export const DEFAULT_SETTINGS = {

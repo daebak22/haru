@@ -8,6 +8,7 @@ import { toast } from '../components/toast.js';
 import { exportBackup, parseBackup, applyBackup } from '../backup.js';
 import { gcal } from '../gcal.js';
 import { TERMS } from '../model/terms.js';
+import { account, logout } from '../account.js';
 
 const seg = (key, options, cur) =>
   `<div class="seg" data-set="${key}">${options
@@ -83,7 +84,13 @@ export function mount(root) {
           <button type="button" class="menu-item" data-act="export"><span class="mi">${icons.download}</span><span class="grow">백업 파일 내보내기<small>전체 데이터를 JSON 파일로 저장</small></span></button>
           <button type="button" class="menu-item" data-act="import"><span class="mi">${icons.upload}</span><span class="grow">백업 파일 불러오기<small>내보낸 JSON 파일에서 복원</small></span></button>
         </div>
-        <p class="hint">지금은 데이터가 <b>이 기기의 브라우저에만</b> 저장돼요. 5단계에서 구글 계정 동기화를 연결하면 폰과 태블릿이 자동으로 맞춰져요. 그 전까지는 가끔 백업 파일을 내보내 두세요.</p>
+        <h2 class="section-title"><span><i class="en">ACCOUNT</i>계정 · 동기화</span></h2>
+        <div class="list">${
+          account.user
+            ? `<div class="setting"><span>${esc(account.user.email || '구글 계정')}<br><small class="muted">${navigator.onLine ? '● 동기화 중 — 폰·태블릿·노트북이 자동으로 맞춰져요' : '○ 오프라인 — 연결되면 자동으로 저장돼요'}</small></span>
+                 <button type="button" class="btn small ghost" data-act="logout">로그아웃</button></div>`
+            : `<div class="setting"><span>이 기기에만 저장 중<br><small class="muted">가끔 백업 파일을 내보내 두세요</small></span></div>`
+        }</div>
         <input type="file" accept=".json,application/json" hidden data-file>
         <p class="app-ver">하루 · 버전 ${VERSION}</p>
       </div>`
@@ -109,6 +116,10 @@ export function mount(root) {
       }
     }
     if (el.dataset.act === 'import') root.querySelector('[data-file]').click();
+    if (el.dataset.act === 'logout') {
+      const ok = await confirmBox('로그아웃할까요? 다시 로그인하면 기록이 그대로 돌아와요.', { ok: '로그아웃' });
+      if (ok) logout();
+    }
   };
   const onChange = async (e) => {
     const toggle = e.target.closest('[data-toggle]');

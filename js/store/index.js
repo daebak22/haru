@@ -1,8 +1,15 @@
 // 저장소 공통 창구. 화면 코드는 반드시 이 파일만 사용한다.
-// 지금은 local.js(이 기기), 5단계부터 cloud.js(Firestore)로 바뀐다.
+// 로그인 전/설정 없음: local.js(이 기기), 로그인 후: cloud.js(Firestore)
 import * as local from './local.js';
 
-const impl = local;
+let impl = local;
+export let mode = 'local'; // 'local' | 'cloud'
+
+// 앱 시작 때 한 번만 바꾼다 (화면을 그리기 전에)
+export function useCloud(cloud) {
+  impl = cloud;
+  mode = 'cloud';
+}
 
 export const DEL = local.DEL;
 export const COLLECTIONS = local.COLLECTIONS;

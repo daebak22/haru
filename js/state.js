@@ -105,21 +105,22 @@ export async function migratePalette() {
   }
 }
 
-// 처음 실행할 때 기본 카테고리 3개 만들기
-export async function seedIfEmpty() {
+// 처음 실행할 때 기본 카테고리 3개 만들기 (key: 이 기기/계정별로 한 번만)
+export async function seedIfEmpty(key = 'haru:v1:seeded') {
   let seeded = false;
   try {
-    seeded = !!localStorage.getItem('haru:v1:seeded');
+    seeded = !!localStorage.getItem(key);
   } catch {
     /* 무시 */
   }
   if (seeded) return;
+  if (store.mode === 'cloud' && !navigator.onLine) return; // 다른 기기의 카테고리를 확인할 수 없을 땐 다음에
   const cats = await store.getAll('categories');
   if (!cats.length) {
     store.batch(DEFAULT_CATEGORIES.map((c, i) => ({ op: 'add', col: 'categories', data: { ...c, order: i, archived: false } })));
   }
   try {
-    localStorage.setItem('haru:v1:seeded', '1');
+    localStorage.setItem(key, '1');
   } catch {
     /* 무시 */
   }

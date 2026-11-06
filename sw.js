@@ -1,7 +1,7 @@
 // 서비스 워커: 앱 파일을 기기에 저장해서 인터넷 없이도 열리게 하고, 새 버전을 감지한다.
 // ★ 파일을 고쳐서 배포할 때마다 VERSION을 올린다 (js/config.js의 VERSION과 같게).
 // ★ 새 파일을 만들면 아래 FILES 목록에 추가한다.
-const VERSION = '0.5.0';
+const VERSION = '0.6.0';
 const CACHE = 'haru-' + VERSION;
 
 const FILES = [
@@ -60,11 +60,24 @@ const FILES = [
   './js/views/projects.js',
   './js/model/project.js',
   './js/components/projectEditor.js',
+  './js/firebase.js',
+  './js/account.js',
+  './js/migrate.js',
+  './js/store/cloud.js',
+  './js/views/login.js',
 ];
+
+// Firebase SDK(구글 공식, 버전 고정 주소) — 오프라인에서도 앱이 열리도록 함께 저장
+const SDK = ['app', 'auth', 'firestore'].map((m) => `https://www.gstatic.com/firebasejs/12.19.0/firebase-${m}.js`);
 
 self.addEventListener('install', (event) => {
   // 새 버전은 받아만 두고, 사용자가 "업데이트"를 누르면 교체 (입력 중 갑자기 바뀌지 않게)
-  event.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES.map((f) => new Request(f, { cache: 'reload' })))));
+  event.waitUntil(
+    caches.open(CACHE).then(async (c) => {
+      await c.addAll(FILES.map((f) => new Request(f, { cache: 'reload' })));
+      await c.addAll(SDK).catch(() => {}); // 실패해도 설치는 계속 (처음 열 때 다시 저장)
+    })
+  );
 });
 
 self.addEventListener('activate', (event) => {
@@ -84,7 +97,21 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  // 구글 로그인·캘린더 API 등 다른 주소의 요청은 건드리지 않음
+  // Firebase SDK 파일: 저장된 것 먼저 (버전 고정 주소라 내용이 바뀌지 않음)
+  if (url.origin === 'https://www.gstatic.com' && url.pathname.startsWith('/firebasejs/')) {
+    event.respondWith(
+      caches.match(req).then(
+        (hit) =>
+          hit ||
+          fetch(req).then((res) => {
+            if (res.ok) caches.open(CACHE).then((c) => c.put(req, res.clone()));
+            return res;
+          })
+      )
+    );
+    return;
+  }
+  // 구글 로그인·캘린더 API·Firestore 등 다른 주소의 요청은 건드리지 않음
   if (url.origin !== self.location.origin) return;
 
   // 화면 이동(앱 열기): 저장된 index.html 먼저 → 인터넷 없어도 열림
