@@ -1,10 +1,10 @@
 // 앱 전체 설정값. 배포할 때마다 VERSION을 올린다 (sw.js의 VERSION과 같게).
 export const APP_NAME = '하루';
-export const VERSION = '0.3.0';
+export const VERSION = '0.3.1';
 
 // 구글 캘린더 읽기용 OAuth 클라이언트 ID (Google Cloud 콘솔에서 만든 값. 공개돼도 괜찮은 값)
 // 예: '1234567890-abcdefg.apps.googleusercontent.com'
-export const GOOGLE_CLIENT_ID = '';
+export const GOOGLE_CLIENT_ID = '492568552375-65tbffroaho7n1difjffemcelfscjisg.apps.googleusercontent.com';
 export const SCHEMA_VERSION = 1;
 
 export const DEFAULT_SETTINGS = {
