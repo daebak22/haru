@@ -12,14 +12,16 @@ import * as moreView from './views/more.js';
 import * as quotesView from './views/quotes.js';
 import * as gcalSettingsView from './views/gcalSettings.js';
 import * as termsView from './views/terms.js';
+import * as plannerView from './views/planner.js';
+import { startTicker } from './timer.js';
 import { prepare as prepareGcal } from './gcal.js';
 import { setupServiceWorker } from './pwa.js';
 import { placeholder } from './views/placeholder.js';
 
 router.register('today', todayView);
 router.register('calendar', calendarView);
-router.register('planner', placeholder('데일리 플래너', 3, 'D-Day, 체크리스트, 10분 단위 타임테이블이 들어갈 자리예요.', 'planner'));
-router.register('projects', placeholder('프로젝트', 4, '프로젝트 기간, 세부 체크리스트, 진행률 막대가 들어갈 자리예요.', 'projects'));
+router.register('planner', plannerView);
+router.register('projects', placeholder('프로젝트', 5, '프로젝트 기간, 세부 체크리스트, 진행률 막대가 들어갈 자리예요.', 'projects'));
 router.register('more', moreView);
 router.register('backlog', backlogView);
 router.register('routines', routinesView);
@@ -35,6 +37,7 @@ seedIfEmpty().then(migratePalette);
 router.start();
 prepareGcal();
 setupServiceWorker();
+startTicker();
 
 // 앱을 켜 둔 채 하루가 바뀌면(06:00) 화면을 새 날짜로 다시 그림
 let lastDay = today();

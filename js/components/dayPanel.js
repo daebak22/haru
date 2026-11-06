@@ -9,6 +9,8 @@ import { QUOTES, quoteIndexFor } from '../model/quotes.js';
 import { TERMS, termIndexFor } from '../model/terms.js';
 import { quoteCardHTML, termCardHTML, toggleFavorite } from './quoteCard.js';
 import { gcalSectionHTML, handleGcalClick } from './gcalUI.js';
+import { timerBarHTML } from './timerUI.js';
+import { ddayChipsHTML } from './dday.js';
 
 function overdueOf(tasks, date) {
   const t = today();
@@ -44,7 +46,8 @@ function termHTML(date) {
 }
 
 // compact: 시트 안에서 쓸 때 (날짜 제목은 시트 머리에 있으므로 진행 막대만)
-export function dayPanelHTML({ date, tasks, dayDoc, compact = false }) {
+// gcal: 구글 일정 칸 포함 여부 (플래너는 아래쪽에 따로 둠)
+export function dayPanelHTML({ date, tasks, dayDoc, compact = false, gcal = true }) {
   const dayTasks = sortTasks(tasks.filter((x) => x.date === date));
   const overdue = overdueOf(tasks, date);
   const skip = dayDoc?.routineSkip || {};
@@ -92,8 +95,9 @@ export function dayPanelHTML({ date, tasks, dayDoc, compact = false }) {
   const isTodayHome = !compact && rel === '오늘';
   const quote = isTodayHome && state.settings.showQuote !== false ? quoteHTML(date) : '';
   const term = isTodayHome && state.settings.showTerm !== false ? termHTML(date) : '';
-  // 순서: 머리 → 한 문장 → 구글 일정 → 지난 미완료 → 할 일 → 루틴 → 오늘의 용어
-  return head + quote + gcalSectionHTML(date) + overdueHTML + tasksHTML + routinesHTML + term;
+  const extras = isTodayHome ? timerBarHTML() + ddayChipsHTML() : '';
+  // 순서: 머리 → 타이머 띠·D-Day → 한 문장 → 구글 일정 → 지난 미완료 → 할 일 → 루틴 → 오늘의 용어
+  return head + extras + quote + (gcal ? gcalSectionHTML(date) : '') + overdueHTML + tasksHTML + routinesHTML + term;
 }
 
 // getCtx: () => ({ date, tasks, dayDoc }) — 클릭한 순간의 최신 데이터
