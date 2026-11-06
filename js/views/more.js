@@ -7,6 +7,7 @@ import { openSheet, confirmBox } from '../components/sheet.js';
 import { toast } from '../components/toast.js';
 import { exportBackup, parseBackup, applyBackup } from '../backup.js';
 import { gcal } from '../gcal.js';
+import { TERMS } from '../model/terms.js';
 
 const seg = (key, options, cur) =>
   `<div class="seg" data-set="${key}">${options
@@ -64,6 +65,7 @@ export function mount(root) {
           <a class="menu-item" href="#backlog"><span class="mi">${icons.inbox}</span><span class="grow">보관함<small>날짜 없는 할 일</small></span><span class="chev">${icons.right}</span></a>
           <a class="menu-item" href="#routines"><span class="mi">${icons.repeat}</span><span class="grow">루틴<small>매일 · 매주 · 매월 반복</small></span><span class="chev">${icons.right}</span></a>
           <a class="menu-item" href="#categories"><span class="mi">${icons.tag}</span><span class="grow">카테고리<small>추가하고 색상 정하기</small></span><span class="chev">${icons.right}</span></a>
+          <a class="menu-item" href="#terms"><span class="mi">${icons.book}</span><span class="grow">부동산금융 용어 사전<small>PF · 투자 · 증권사 IB · 자산운용 ${TERMS.length}개</small></span><span class="chev">${icons.right}</span></a>
           <a class="menu-item" href="#quotes"><span class="mi">${icons.heart}</span><span class="grow">저장함<small>문장 ${favCount} · 부동산금융 용어 ${termCount}</small></span><span class="chev">${icons.right}</span></a>
           <a class="menu-item" href="#gcal"><span class="mi">${icons.calendar}</span><span class="grow">구글 캘린더<small>${gcal.linked ? '연결됨 · 표시할 캘린더 고르기' : '일정을 읽기 전용으로 함께 보기'}</small></span><span class="chev">${icons.right}</span></a>
         </div>

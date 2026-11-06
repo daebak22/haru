@@ -5,6 +5,7 @@ import { state, updateSettings } from '../state.js';
 import { esc } from '../util/dom.js';
 import { icons } from './icons.js';
 import { toast } from './toast.js';
+import { TERMS, catName } from '../model/terms.js';
 
 const FIELD = { quote: 'favQuotes', term: 'favTerms' };
 export const isSaved = (kind, id) => !!state.settings[FIELD[kind]]?.[id];
@@ -25,13 +26,22 @@ export function quoteCardHTML(q, { nextable = false } = {}) {
   </div>`;
 }
 
-export function termCardHTML(t, { nextable = false } = {}) {
+// home: 오늘 화면 카드 (다음 용어 / 용어 사전 버튼 포함)
+export function termCardHTML(t, { home = false } = {}) {
   return `<div class="term" data-kind="term">
-    <div class="term-main"${nextable ? ' data-act="term-next" role="button" tabindex="0" aria-label="누르면 다른 용어"' : ''}>
-      <p class="term-label">${icons.book}<span>${nextable ? '오늘의 부동산금융 용어' : '부동산금융 용어'}</span></p>
+    <div class="term-main">
+      <p class="term-label">${icons.book}<span>${home ? 'TODAY’S TERM' : esc(catName(t.cat))}</span>${home ? `<em>${esc(catName(t.cat))}</em>` : ''}</p>
       <p class="term-title">${esc(t.term)}</p>
       <p class="term-en">${esc(t.en)}</p>
       <p class="term-desc">${esc(t.desc)}</p>
+      ${
+        home
+          ? `<div class="term-actions">
+              <button type="button" class="btn small soft" data-act="term-next">다음 용어 ${icons.right}</button>
+              <a class="btn small ghost" href="#terms">용어 사전 ${TERMS.length}개</a>
+            </div>`
+          : ''
+      }
     </div>
     ${favButton('term', t.id)}
   </div>`;

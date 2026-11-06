@@ -1,6 +1,6 @@
 // 여러 화면이 함께 쓰는 데이터: 설정, 카테고리, 루틴 (개수가 적어 항상 구독)
 import * as store from './store/index.js';
-import { DEFAULT_SETTINGS, DEFAULT_CATEGORIES } from './config.js';
+import { DEFAULT_SETTINGS, DEFAULT_CATEGORIES, PALETTE, OLD_PALETTES } from './config.js';
 import { setDayStartHour } from './util/date.js';
 
 export const state = {
@@ -69,6 +69,32 @@ export function startState() {
     emit();
   });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => applyTheme(state.settings.theme));
+}
+
+// 예전 버전 색으로 만든 카테고리를 새 팔레트 색으로 한 번만 바꿔 줌 (직접 고른 색은 그대로)
+export async function migratePalette() {
+  try {
+    if (localStorage.getItem('haru:v1:palette3')) return;
+  } catch {
+    return;
+  }
+  const cats = await store.getAll('categories');
+  const ops = [];
+  for (const c of cats) {
+    for (const old of OLD_PALETTES) {
+      const i = old.findIndex((x) => x.toLowerCase() === (c.color || '').toLowerCase());
+      if (i >= 0) {
+        ops.push({ op: 'patch', col: 'categories', id: c.id, data: { color: PALETTE[i] } });
+        break;
+      }
+    }
+  }
+  if (ops.length) await store.batch(ops);
+  try {
+    localStorage.setItem('haru:v1:palette3', '1');
+  } catch {
+    /* 무시 */
+  }
 }
 
 // 처음 실행할 때 기본 카테고리 3개 만들기

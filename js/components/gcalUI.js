@@ -53,7 +53,7 @@ export function gcalSectionHTML(date) {
         : '';
   return `<section class="section">
     <h2 class="section-title">
-      <span>구글 캘린더${events.length ? `<span class="count">${events.length}</span>` : ''}</span>
+      <span><i class="en">SCHEDULE</i>구글 캘린더${events.length ? `<span class="count">${events.length}</span>` : ''}</span>
       <span class="sec-tools">${st === 'loading' ? '<small class="muted">불러오는 중…</small>' : gcal.fetchedAt && st !== 'expired' ? `<small class="muted">${lastUpdatedLabel()}</small>` : ''}
         <button type="button" class="icon-btn sm${st === 'loading' ? ' spin' : ''}" data-act="gcal-refresh" aria-label="구글 캘린더 새로고침">${icons.refresh}</button></span>
     </h2>

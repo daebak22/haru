@@ -14,6 +14,8 @@ import { sortTasks } from '../components/rows.js';
 import { openSheet } from '../components/sheet.js';
 import { dayPanelHTML, bindDayPanel } from '../components/dayPanel.js';
 
+const MONTHS_EN = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
 // 다른 화면에 다녀와도 보던 달을 기억
 let viewY;
 let viewM;
@@ -126,7 +128,7 @@ export function mount(root, opts = {}) {
     const cal = `
       <div class="cal-wrap">
         <div class="cal-head">
-          <h1 class="cal-title">${viewM + 1}월<small>${viewY}</small></h1>
+          <h1 class="cal-title"><b>${viewM + 1}</b>월<small>${viewY} · ${MONTHS_EN[viewM]}</small></h1>
           <button type="button" class="btn small soft" data-act="cal-today">오늘</button>
           <button type="button" class="icon-btn" data-act="cal-prev" aria-label="이전 달">${icons.left}</button>
           <button type="button" class="icon-btn" data-act="cal-next" aria-label="다음 달">${icons.right}</button>

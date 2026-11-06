@@ -40,7 +40,7 @@ function quoteHTML(date) {
 let termShift = 0;
 function termHTML(date) {
   const t = TERMS[(termIndexFor(date) + termShift) % TERMS.length];
-  return termCardHTML(t, { nextable: true });
+  return termCardHTML(t, { home: true });
 }
 
 // compact: 시트 안에서 쓸 때 (날짜 제목은 시트 머리에 있으므로 진행 막대만)
@@ -60,7 +60,7 @@ export function dayPanelHTML({ date, tasks, dayDoc, compact = false }) {
     ? `<div class="day-sum">${rel ? `<b class="day-rel">${rel}</b>` : ''}<span>${total ? `${done} / ${total} 완료` : '계획 없음'}</span><div class="bar"><i style="width:${pct}%"></i></div></div>`
     : `<div class="day-head">
         <div>
-          <div class="day-rel">${rel || weekdayFull(date)}</div>
+          <div class="day-rel">${{ 오늘: 'TODAY', 내일: 'TOMORROW', 어제: 'YESTERDAY' }[rel] || weekdayFull(date)}</div>
           <h1 class="day-title">${fmtMonthDay(date)}${rel ? `<span class="wd">${weekdayFull(date)}</span>` : ''}</h1>
         </div>
         ${ringHTML(done, total)}
@@ -68,13 +68,13 @@ export function dayPanelHTML({ date, tasks, dayDoc, compact = false }) {
 
   const overdueHTML = overdue.length
     ? `<section class="section warn">
-        <h2 class="section-title"><span>지난 미완료<span class="count">${overdue.length}</span></span><button type="button" class="btn small soft" data-act="overdue-all">모두 오늘로</button></h2>
+        <h2 class="section-title"><span><i class="en">OVERDUE</i>지난 미완료<span class="count">${overdue.length}</span></span><button type="button" class="btn small soft" data-act="overdue-all">모두 오늘로</button></h2>
         <div class="list">${overdue.map((x) => taskRowHTML(x, { showDate: true })).join('')}</div>
       </section>`
     : '';
 
   const tasksHTML = `<section class="section">
-      <h2 class="section-title"><span>할 일${dayTasks.length ? `<span class="count">${dayTasks.filter((x) => x.done).length}/${dayTasks.length}</span>` : ''}</span></h2>
+      <h2 class="section-title"><span><i class="en">TO DO</i>할 일${dayTasks.length ? `<span class="count">${dayTasks.filter((x) => x.done).length}/${dayTasks.length}</span>` : ''}</span></h2>
       <div class="list">${
         dayTasks.length
           ? dayTasks.map((x) => taskRowHTML(x)).join('')
@@ -84,7 +84,7 @@ export function dayPanelHTML({ date, tasks, dayDoc, compact = false }) {
 
   const routinesHTML = routines.length
     ? `<section class="section">
-        <h2 class="section-title"><span>루틴<span class="count">${counted.filter((r) => rdone[r.id]).length}/${counted.length}</span></span></h2>
+        <h2 class="section-title"><span><i class="en">ROUTINE</i>루틴<span class="count">${counted.filter((r) => rdone[r.id]).length}/${counted.length}</span></span></h2>
         <div class="list">${routines.map((r) => routineRowHTML(r, { done: !!rdone[r.id], skipped: !!skip[r.id] })).join('')}</div>
       </section>`
     : '';

@@ -1,35 +1,37 @@
-/* 색·그림자·간격 변수. 모든 색은 여기서만 정한다.
-   기본은 밝은 테마. 깨끗한 흰 카드 + 옅은 회색 바탕 + 차분한 파란 강조색. */
+/* 색·선·간격 변수. 모든 색은 여기서만 정한다.
+   콘셉트: 깔끔한 네이비 — 밝게: 흰 바탕 + 네이비 포인트 / 어둡게: 전체 짙은 네이비. */
 :root {
-  --bg: #F4F5F7;
+  --bg: #FFFFFF;
   --surface: #FFFFFF;
-  --surface-2: #F1F3F6;
-  --line: #ECEEF1;
-  --line-strong: #E1E4E9;
-  --grid: rgba(60, 72, 88, 0.06);
-  --text: #18202B;
-  --muted: #6B7380;
-  --faint: #A9B0BB;
-  --accent: #4C6EF5;
-  --accent-strong: #3B5BDB;
-  --accent-soft: #EEF2FF;
+  --surface-2: #F3F5F9;
+  --line: #E6E9F0;          /* 얇은 선 */
+  --line-strong: #D3D9E4;
+  --dot: #DCE1EA;           /* 점선 */
+  --grid: rgba(27, 42, 74, 0.05);
+  --text: #18233D;          /* 짙은 네이비 글자 */
+  --muted: #6B7690;
+  --faint: #A6AEC0;
+  --accent: #1E3A6E;        /* 네이비 (버튼·오늘 표시) */
+  --accent-strong: #142A54;
+  --accent-soft: #EAF0F9;
   --on-accent: #FFFFFF;
-  --danger: #E5484D;
-  --danger-soft: #FDECEC;
-  --sun: #E5484D;
-  --sat: #3B82F6;
-  --nocat: #9AA3B2;
-  --toast-bg: #1F2632;
-  --toast-text: #F5F7FA;
-  --toast-action: #9DB3FF;
-  --backdrop: rgba(17, 24, 39, 0.36);
-  --nav-bg: rgba(255, 255, 255, 0.94);
-  --shadow-card: 0 1px 2px rgba(17, 24, 39, 0.04), 0 2px 10px rgba(17, 24, 39, 0.045);
-  --shadow: 0 12px 32px rgba(17, 24, 39, 0.16);
-  --shadow-fab: 0 6px 18px rgba(76, 110, 245, 0.38);
+  --point: #1E3A6E;         /* 포인트도 네이비 하나로 (TODAY, 진행률 링, ♥) */
+  --danger: #C8443A;
+  --danger-soft: #FBEAE8;
+  --sun: #C8443A;
+  --sat: #2F5BA8;
+  --nocat: #A6AEC0;
+  --toast-bg: #18233D;
+  --toast-text: #FFFFFF;
+  --toast-action: #A9C1F0;
+  --backdrop: rgba(14, 21, 36, 0.38);
+  --nav-bg: rgba(255, 255, 255, 0.97);
+  --shadow-card: 0 0 0 1px var(--line);      /* 그림자 대신 얇은 테두리 */
+  --shadow: 0 10px 30px rgba(14, 21, 36, 0.18);
+  --shadow-fab: 0 4px 14px rgba(30, 58, 110, 0.35);
 
-  --radius: 18px;
-  --radius-sm: 12px;
+  --radius: 14px;
+  --radius-sm: 10px;
   --nav-h: 66px;
   --tap: 44px;
   --font: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -38,62 +40,66 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0F1114;
-    --surface: #181B20;
-    --surface-2: #21252C;
-    --line: #262B33;
-    --line-strong: #30363F;
+    --bg: #0D1424;
+    --surface: #141E33;
+    --surface-2: #1B2842;
+    --line: #22304D;
+    --line-strong: #2E3E60;
+    --dot: #2E3E60;
     --grid: rgba(255, 255, 255, 0.04);
-    --text: #ECEEF1;
-    --muted: #9BA3AF;
-    --faint: #626A76;
-    --accent: #7D93FF;
-    --accent-strong: #98A9FF;
-    --accent-soft: #212A48;
-    --on-accent: #0B1020;
-    --danger: #F2716D;
-    --danger-soft: #3A1E1F;
-    --sun: #F2807B;
-    --sat: #7FAAF5;
-    --nocat: #6D7684;
-    --toast-bg: #ECEEF1;
-    --toast-text: #14181D;
-    --toast-action: #3B5BDB;
+    --text: #E8EDF7;
+    --muted: #9AA6BE;
+    --faint: #5E6C88;
+    --accent: #D7E2F7;
+    --accent-strong: #FFFFFF;
+    --accent-soft: #1E2C4A;
+    --on-accent: #0D1424;
+    --point: #8FB0EE;
+    --danger: #EE7F74;
+    --danger-soft: #3A1F25;
+    --sun: #EE7F74;
+    --sat: #8FB0EE;
+    --nocat: #5E6C88;
+    --toast-bg: #E8EDF7;
+    --toast-text: #0D1424;
+    --toast-action: #1E3A6E;
     --backdrop: rgba(0, 0, 0, 0.6);
-    --nav-bg: rgba(24, 27, 32, 0.94);
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
-    --shadow-fab: 0 6px 18px rgba(0, 0, 0, 0.45);
+    --nav-bg: rgba(20, 30, 51, 0.97);
+    --shadow-card: 0 0 0 1px var(--line);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    --shadow-fab: 0 4px 14px rgba(0, 0, 0, 0.5);
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #0F1114;
-  --surface: #181B20;
-  --surface-2: #21252C;
-  --line: #262B33;
-  --line-strong: #30363F;
+  --bg: #0D1424;
+  --surface: #141E33;
+  --surface-2: #1B2842;
+  --line: #22304D;
+  --line-strong: #2E3E60;
+  --dot: #2E3E60;
   --grid: rgba(255, 255, 255, 0.04);
-  --text: #ECEEF1;
-  --muted: #9BA3AF;
-  --faint: #626A76;
-  --accent: #7D93FF;
-  --accent-strong: #98A9FF;
-  --accent-soft: #212A48;
-  --on-accent: #0B1020;
-  --danger: #F2716D;
-  --danger-soft: #3A1E1F;
-  --sun: #F2807B;
-  --sat: #7FAAF5;
-  --nocat: #6D7684;
-  --toast-bg: #ECEEF1;
-  --toast-text: #14181D;
-  --toast-action: #3B5BDB;
+  --text: #E8EDF7;
+  --muted: #9AA6BE;
+  --faint: #5E6C88;
+  --accent: #D7E2F7;
+  --accent-strong: #FFFFFF;
+  --accent-soft: #1E2C4A;
+  --on-accent: #0D1424;
+  --point: #8FB0EE;
+  --danger: #EE7F74;
+  --danger-soft: #3A1F25;
+  --sun: #EE7F74;
+  --sat: #8FB0EE;
+  --nocat: #5E6C88;
+  --toast-bg: #E8EDF7;
+  --toast-text: #0D1424;
+  --toast-action: #1E3A6E;
   --backdrop: rgba(0, 0, 0, 0.6);
-  --nav-bg: rgba(24, 27, 32, 0.94);
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
-  --shadow-fab: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --nav-bg: rgba(20, 30, 51, 0.97);
+  --shadow-card: 0 0 0 1px var(--line);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  --shadow-fab: 0 4px 14px rgba(0, 0, 0, 0.5);
   color-scheme: dark;
 }

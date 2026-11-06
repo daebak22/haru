@@ -1,5 +1,5 @@
 // 앱 시작점
-import { startState, seedIfEmpty } from './state.js';
+import { startState, seedIfEmpty, migratePalette } from './state.js';
 import { today } from './util/date.js';
 import { toast } from './components/toast.js';
 import * as router from './router.js';
@@ -11,6 +11,7 @@ import * as categoriesView from './views/categories.js';
 import * as moreView from './views/more.js';
 import * as quotesView from './views/quotes.js';
 import * as gcalSettingsView from './views/gcalSettings.js';
+import * as termsView from './views/terms.js';
 import { prepare as prepareGcal } from './gcal.js';
 import { setupServiceWorker } from './pwa.js';
 import { placeholder } from './views/placeholder.js';
@@ -25,11 +26,12 @@ router.register('routines', routinesView);
 router.register('categories', categoriesView);
 router.register('quotes', quotesView);
 router.register('gcal', gcalSettingsView);
+router.register('terms', termsView);
 
 window.addEventListener('haru:storage-error', () => toast('저장 공간이 부족해 저장하지 못했어요. 백업 후 오래된 데이터를 정리해 주세요.'));
 
 startState();
-seedIfEmpty();
+seedIfEmpty().then(migratePalette);
 router.start();
 prepareGcal();
 setupServiceWorker();

@@ -654,6 +654,73 @@ body.sheet-open { overflow: hidden; }
   #toast-root { bottom: 28px; }
 }
 
+/* ───────── 종이 플래너 느낌 다듬기 ───────── */
+.section-title .en, .label-en {
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 10.5px;
+  font-weight: 800;
+  font-style: normal;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+}
+.section-title { border-bottom: 1px dashed var(--dot); padding-bottom: 6px; margin-bottom: 10px; }
+.day-rel { letter-spacing: 0.12em; font-size: 11.5px; font-weight: 800; color: var(--point); }
+.day-title { font-size: 28px; font-variant-numeric: tabular-nums; }
+.ring .val { stroke: var(--point); }
+.ring.full span, .ring.full .val { color: var(--point); stroke: var(--point); }
+.row-meta .time { color: var(--text); }
+.tag { color: color-mix(in srgb, var(--c) 52%, var(--text)); background: color-mix(in srgb, var(--c) 20%, transparent); }
+.chip[aria-pressed="true"] { border-color: var(--text); background: var(--accent-soft); color: var(--text); }
+.chip-date.has-value { border-color: var(--text); background: var(--accent-soft); color: var(--text); }
+.chip.add-chip { color: var(--muted); }
+.nav a[aria-current="page"] { color: var(--accent); }
+.nav a[aria-current="page"] .ic { background: var(--accent-soft); }
+.btn.soft { background: var(--accent-soft); color: var(--text); }
+.fab { border-radius: 50%; }
+
+/* 한 문장: 속지 위 손글씨 메모 느낌 */
+.quote { background: var(--surface); box-shadow: var(--shadow-card); }
+.quote::before { color: var(--point); opacity: 0.9; }
+.quote-text { font-weight: 650; font-size: 15.5px; }
+.quote { box-shadow: inset 3px 0 0 var(--point), var(--shadow-card); }
+.quote-fav { color: var(--faint); opacity: 1; }
+.quote-fav[aria-pressed="true"] { color: var(--point); }
+.term .quote-fav { color: var(--faint); }
+
+/* 오늘의 용어 */
+.term-label { color: var(--muted); letter-spacing: 0.12em; font-size: 10.5px; font-weight: 800; }
+.term-label em {
+  margin-left: auto;
+  margin-right: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--muted);
+  font-style: normal;
+  letter-spacing: 0;
+  font-size: 11px;
+  font-weight: 700;
+}
+.term-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.term-actions svg { width: 16px; height: 16px; }
+.term-main { cursor: default; }
+.search { margin: 4px 0 12px; background: var(--surface); box-shadow: var(--shadow-card); }
+.cat-filter { margin-bottom: 4px; }
+
+/* 달력: 큰 숫자 월 + 얇은 괘선 */
+.cal-title b { font-size: 34px; font-weight: 800; letter-spacing: -0.04em; margin-right: 2px; }
+.cal-title small { letter-spacing: 0.12em; font-size: 11px; font-weight: 800; color: var(--faint); }
+.cal-week span { font-size: 11px; letter-spacing: 0.08em; }
+.cal-cell.is-today .num { background: var(--accent); color: var(--on-accent); }
+.cal-cell.selected { background: var(--accent-soft); }
+/* 할 일 = 형광펜으로 칠한 듯한 옅은 막대 + 왼쪽 진한 선 */
+.ev { background: color-mix(in srgb, var(--c) 30%, var(--surface)); color: var(--text); box-shadow: inset 2.5px 0 0 var(--c); font-weight: 600; }
+.ev.done { background: color-mix(in srgb, var(--c) 12%, var(--surface)); box-shadow: inset 2.5px 0 0 color-mix(in srgb, var(--c) 40%, transparent); }
+.ev.timed { box-shadow: none; }
+/* 구글 일정 = 테두리만 */
+.ev.g { background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 1.2px var(--c); }
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }

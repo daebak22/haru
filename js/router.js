@@ -10,7 +10,7 @@ const TABS = [
   { id: 'projects', label: '프로젝트', icon: 'projects' },
   { id: 'more', label: '더보기', icon: 'more' },
 ];
-const PARENT = { backlog: 'more', routines: 'more', categories: 'more', quotes: 'more', gcal: 'more' };
+const PARENT = { backlog: 'more', routines: 'more', categories: 'more', quotes: 'more', gcal: 'more', terms: 'more' };
 
 let cleanup = null;
 const main = () => document.getElementById('main');

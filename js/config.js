@@ -1,6 +1,6 @@
 // 앱 전체 설정값. 배포할 때마다 VERSION을 올린다 (sw.js의 VERSION과 같게).
 export const APP_NAME = '하루';
-export const VERSION = '0.2.0';
+export const VERSION = '0.3.0';
 
 // 구글 캘린더 읽기용 OAuth 클라이언트 ID (Google Cloud 콘솔에서 만든 값. 공개돼도 괜찮은 값)
 // 예: '1234567890-abcdefg.apps.googleusercontent.com'
@@ -22,13 +22,20 @@ export const DEFAULT_SETTINGS = {
 };
 
 // 카테고리 기본 팔레트 (라이트/다크 모두에서 잘 보이는 색)
+// 종이 플래너에 어울리는 차분한 파스텔 (형광펜·색연필 느낌)
 export const PALETTE = [
-  '#EF5A5A', '#F7894A', '#F2B33D', '#4CB782', '#2DB5A8', '#3B9BF0',
-  '#4C6EF5', '#8B5CF6', '#E05CA4', '#B08463', '#7A8F3C', '#8A94A6',
+  '#E07A73', '#E8A15B', '#E3C15A', '#8DB580', '#6FB3A8', '#7FA7D6',
+  '#5E77B5', '#A08BC9', '#D98BA8', '#B49580', '#8E9A6B', '#9A9890',
+];
+
+// 예전 버전 팔레트 → 새 팔레트 (같은 자리 색으로 한 번만 자동 변환)
+export const OLD_PALETTES = [
+  ['#EF5A5A', '#F7894A', '#F2B33D', '#4CB782', '#2DB5A8', '#3B9BF0', '#4C6EF5', '#8B5CF6', '#E05CA4', '#B08463', '#7A8F3C', '#8A94A6'],
+  ['#E5484D', '#F76B15', '#E2A400', '#46A758', '#12A594', '#0090FF', '#3E63DD', '#8E4EC6', '#D6409F', '#A18072', '#5C7C2E', '#6F6E77'],
 ];
 
 export const DEFAULT_CATEGORIES = [
-  { name: '공부', color: '#3B9BF0' },
-  { name: '운동', color: '#4CB782' },
-  { name: '생활', color: '#F7894A' },
+  { name: '공부', color: '#7FA7D6' },
+  { name: '운동', color: '#8DB580' },
+  { name: '생활', color: '#E8A15B' },
 ];
