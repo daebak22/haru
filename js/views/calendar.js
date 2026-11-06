@@ -112,7 +112,7 @@ export function mount(root, opts = {}) {
       if (total && n === total) ok = '<span class="ok" title="모두 완료">✓</span>';
     }
     return `<button type="button" class="${cls}" data-act="cal-pick" data-date="${d}" aria-label="${date.getMonth() + 1}월 ${date.getDate()}일, 할 일 ${list.length}개">
-      <span class="top"><span class="num">${date.getDate()}</span>${ok}</span>
+      <span class="top"><span class="num">${date.getDate()}</span>${dayDoc?.emoji ? `<span class="emo">${esc(dayDoc.emoji)}</span>` : ok}</span>
       <span class="evs">${shown.map((x) => (x.p ? pbarHTML(x.p, d, weekStart) : x.g ? gevHTML(x.g) : evHTML(x))).join('')}${more ? `<span class="ev-more">+${more}</span>` : ''}</span>
     </button>`;
   }

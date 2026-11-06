@@ -11,6 +11,7 @@ import { quoteCardHTML, termCardHTML, toggleFavorite } from './quoteCard.js';
 import { gcalSectionHTML, handleGcalClick } from './gcalUI.js';
 import { timerBarHTML } from './timerUI.js';
 import { ddayChipsHTML } from './dday.js';
+import { diaryHTML, bindDiary, openEmojiPicker } from './diary.js';
 
 function overdueOf(tasks, date) {
   const t = today();
@@ -97,7 +98,7 @@ export function dayPanelHTML({ date, tasks, dayDoc, compact = false, gcal = true
   const term = isTodayHome && state.settings.showTerm !== false ? termHTML(date) : '';
   const extras = isTodayHome ? timerBarHTML() + ddayChipsHTML() : '';
   // 순서: 머리 → 타이머 띠·D-Day → 한 문장 → 구글 일정 → 지난 미완료 → 할 일 → 루틴 → 오늘의 용어
-  return head + extras + quote + (gcal ? gcalSectionHTML(date) : '') + overdueHTML + tasksHTML + routinesHTML + term;
+  return head + extras + quote + (gcal ? gcalSectionHTML(date) : '') + overdueHTML + tasksHTML + routinesHTML + diaryHTML(date, dayDoc) + term;
 }
 
 // getCtx: () => ({ date, tasks, dayDoc }) — 클릭한 순간의 최신 데이터
@@ -155,10 +156,17 @@ export function bindDayPanel(root, getCtx) {
       case 'fav':
         toggleFavorite(el.dataset.kind, el.dataset.fid);
         break;
+      case 'emoji':
+        openEmojiPicker(el.dataset.date, dayDoc?.emoji || '');
+        break;
       default:
         handleGcalClick(el, date);
     }
   };
   root.addEventListener('click', onClick);
-  return () => root.removeEventListener('click', onClick);
+  const unDiary = bindDiary(root);
+  return () => {
+    root.removeEventListener('click', onClick);
+    unDiary();
+  };
 }

@@ -18,12 +18,28 @@ export function frame(fn) {
 }
 
 // 내용을 바꿔도 각 영역의 스크롤 위치를 유지
+// 입력 중인 칸([data-keep])은 다시 그려도 글자·커서를 유지 (예: 한 줄 일기 쓰는 도중 데이터가 바뀌어도)
 export function setHTML(root, html) {
   const saved = [...root.querySelectorAll('[data-scroll]')].map((el) => [el.dataset.scroll, el.scrollTop]);
+  const ae = document.activeElement;
+  const keep = ae && root.contains(ae) && ae.dataset?.keep ? { k: ae.dataset.keep, v: ae.value, s: ae.selectionStart, e: ae.selectionEnd, saved: ae.dataset.saved } : null;
   root.innerHTML = html;
   for (const [key, top] of saved) {
     const el = root.querySelector(`[data-scroll="${key}"]`);
     if (el) el.scrollTop = top;
+  }
+  if (keep) {
+    const el = root.querySelector(`[data-keep="${keep.k}"]`);
+    if (el) {
+      el.value = keep.v;
+      if (keep.saved != null) el.dataset.saved = keep.saved;
+      el.focus({ preventScroll: true });
+      try {
+        el.setSelectionRange(keep.s, keep.e);
+      } catch {
+        /* 무시 */
+      }
+    }
   }
 }
 

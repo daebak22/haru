@@ -1,7 +1,7 @@
 // 서비스 워커: 앱 파일을 기기에 저장해서 인터넷 없이도 열리게 하고, 새 버전을 감지한다.
 // ★ 파일을 고쳐서 배포할 때마다 VERSION을 올린다 (js/config.js의 VERSION과 같게).
 // ★ 새 파일을 만들면 아래 FILES 목록에 추가한다.
-const VERSION = '0.6.0';
+const VERSION = '0.7.0';
 const CACHE = 'haru-' + VERSION;
 
 const FILES = [
@@ -65,6 +65,7 @@ const FILES = [
   './js/migrate.js',
   './js/store/cloud.js',
   './js/views/login.js',
+  './js/components/diary.js',
 ];
 
 // Firebase SDK(구글 공식, 버전 고정 주소) — 오프라인에서도 앱이 열리도록 함께 저장
