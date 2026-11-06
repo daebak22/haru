@@ -747,7 +747,21 @@ body.sheet-open { overflow: hidden; }
 
 /* ───────── 로그인 · 오프라인 ───────── */
 body.logged-out .nav { display: none; }
-body.logged-out .main { padding-bottom: 24px; }
+/* 로그인 화면은 폰·태블릿, 세로·가로 상관없이 항상 화면 전체를 씀 (가로 배치의 좁은 메뉴 칸에 끼지 않게) */
+body.logged-out .main,
+body.logged-out .main.fit {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: block;
+  width: auto;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  padding: env(safe-area-inset-top) 20px 24px;
+  overflow-y: auto;
+  background: var(--bg);
+}
 .login { max-width: 360px; margin: 0 auto; padding: 12vh 8px 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .login-logo { border-radius: 22px; box-shadow: var(--shadow-card); }
 .login h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; margin-top: 6px; }

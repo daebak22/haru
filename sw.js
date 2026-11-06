@@ -1,7 +1,7 @@
 // 서비스 워커: 앱 파일을 기기에 저장해서 인터넷 없이도 열리게 하고, 새 버전을 감지한다.
 // ★ 파일을 고쳐서 배포할 때마다 VERSION을 올린다 (js/config.js의 VERSION과 같게).
 // ★ 새 파일을 만들면 아래 FILES 목록에 추가한다.
-const VERSION = '0.7.0';
+const VERSION = '0.7.1';
 const CACHE = 'haru-' + VERSION;
 
 const FILES = [
